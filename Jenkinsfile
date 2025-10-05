@@ -33,17 +33,18 @@ pipeline {
         }
 
         stage('SonarCloud Analysis') {
-            steps {
-                withCredentials([string(credentialsId: '8.2C-SonarCloud-Integration', variable: 'SONAR_TOKEN')]) {
-                    sh '''
-                    echo "Running SonarCloud Analysis..."
-                    curl -sSLo sonar-scanner.zip https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-5.0.1.3006-linux.zip
-                    unzip -o sonar-scanner.zip
-                    export PATH=$PATH:$(pwd)/sonar-scanner-5.0.1.3006-linux/bin
-                    sonar-scanner
-                    '''
-                }
-            }
-        }
+  steps {
+    withCredentials([string(credentialsId: 'SONAR_TOKEN', variable: 'SONAR_TOKEN')]) {
+      sh '''
+      echo "Running SonarCloud Analysis..."
+      curl -sSLo sonar-scanner.zip https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-5.0.1.3006-linux.zip
+      unzip -o sonar-scanner.zip
+      export PATH=$PATH:$(pwd)/sonar-scanner-5.0.1.3006-linux/bin
+      sonar-scanner
+      '''
+    }
+  }
+}
+
     }
 }
